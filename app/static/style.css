@@ -1,0 +1,2470 @@
+:root{
+  --bg:#fff4f8;
+  --card:#fffafd;
+  --text:#24153f;
+  --muted:#806b82;
+  --line:#efc9da;
+  --nav:#24163f;
+  --indigo:#c92b78;
+  --purple:#9a4fb0;
+  --green:#4b9b79;
+  --red:#df4160;
+  --amber:#d99a3d;
+  --soft:#fde8f1
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 85% 0%,rgba(238,159,202,.18),transparent 28%),
+    radial-gradient(circle at 0% 100%,rgba(255,190,205,.16),transparent 30%),
+    var(--bg);
+  color:var(--text)
+}
+
+#app{
+  display:flex;
+  min-height:100vh
+}
+
+#sidebar{
+  width:255px;
+  background:linear-gradient(180deg,#24163f,#3b1c52,#581d59);
+  color:#fff;
+  padding:20px 14px;
+  position:fixed;
+  inset:0 auto 0 0;
+  z-index:30;
+  display:flex;
+  flex-direction:column;
+  box-shadow:8px 0 30px rgba(62,23,69,.14)
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 8px 18px
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#d51f78,#9a4fb0);
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  box-shadow:0 8px 20px rgba(210,31,115,.25)
+}
+
+.brand b{
+  font-size:22px;
+  display:block
+}
+
+.brand span,
+.profile small{
+  display:block;
+  color:#d8bfd4;
+  font-size:11px;
+  margin-top:2px
+}
+
+.profile{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:10px;
+  display:flex;
+  align-items:center;
+  gap:9px
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ed4d98,#9d57b1);
+  display:grid;
+  place-items:center;
+  font-weight:800
+}
+
+.profile div:nth-child(2){
+  flex:1
+}
+
+.iconBtn{
+  background:transparent;
+  color:#fff;
+  font-size:20px;
+  padding:4px
+}
+
+.nav{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#ead9e8;
+  text-align:left;
+  padding:11px 12px;
+  border-radius:10px;
+  margin-top:3px;
+  font-weight:700;
+  cursor:pointer
+}
+
+.nav:hover,
+.nav.active{
+  background:linear-gradient(
+    90deg,
+    rgba(232,73,145,.24),
+    rgba(166,81,177,.18)
+  );
+  color:#fff
+}
+
+.nav.emergency{
+  color:#ff9fb5
+}
+
+.sidebarFoot{
+  margin-top:auto;
+  color:#bfaac0;
+  font-size:10px;
+  padding:12px 8px
+}
+
+.sidebarFoot span{
+  color:#9c829f
+}
+
+main{
+  margin-left:255px;
+  width:calc(100% - 255px);
+  min-width:0
+}
+
+.page{
+  display:none;
+  min-height:100vh
+}
+
+.page.active{
+  display:block
+}
+
+.topbar{
+  padding:25px 28px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.topbar h1{
+  margin:0;
+  font-size:26px;
+  color:var(--text)
+}
+
+.topbar p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:14px
+}
+
+.mobileMenu{
+  display:none
+}
+
+.pill{
+  border:1px solid var(--line);
+  background:var(--card);
+  padding:10px 14px;
+  border-radius:999px
+}
+
+.mapLayout{
+  height:calc(100vh - 105px);
+  display:flex;
+  gap:0
+}
+
+.routePanel{
+  width:410px;
+  background:rgba(255,250,253,.96);
+  padding:24px;
+  overflow:auto;
+  border-right:1px solid var(--line)
+}
+
+#map{
+  flex:1;
+  min-width:0
+}
+
+.eyebrow{
+  font-size:11px;
+  letter-spacing:1.5px;
+  font-weight:800;
+  color:var(--indigo)
+}
+
+h2{
+  margin:7px 0 10px;
+  color:var(--text)
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  margin:16px 0 7px;
+  color:#49304d
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid #e9bfd2;
+  border-radius:11px;
+  padding:12px;
+  background:#fffafd;
+  font:inherit;
+  color:var(--text)
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--indigo);
+  box-shadow:0 0 0 3px rgba(210,31,115,.12);
+  outline:none
+}
+
+textarea{
+  min-height:130px;
+  resize:vertical
+}
+
+button{
+  border:0;
+  border-radius:11px;
+  padding:11px 14px;
+  font-weight:800;
+  cursor:pointer;
+  background:#f7e8ef;
+  color:#3a2544
+}
+
+button:hover{
+  box-shadow:0 5px 15px rgba(177,42,108,.10)
+}
+
+.locationBtn{
+  width:100%;
+  background:#fde8f1;
+  color:#b81764;
+  margin:8px 0
+}
+
+.searchRow{
+  display:flex;
+  gap:8px
+}
+
+.searchRow input{
+  flex:1
+}
+
+.searchResults{
+  max-height:180px;
+  overflow:auto
+}
+
+.result{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  margin-top:5px;
+  font-size:12px;
+  cursor:pointer
+}
+
+.result:hover{
+  background:#fde8f1
+}
+
+.quickRow,
+.seg,
+.routeButtons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:9px
+}
+
+.quickRow button,
+.seg button{
+  font-size:12px
+}
+
+.seg .selected{
+  background:linear-gradient(100deg,#d21f73,#9a4fb0);
+  color:white
+}
+
+.routeButtons button{
+  flex:1
+}
+
+.primary{
+  background:linear-gradient(100deg,#d21f73,#9a4fb0);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(210,31,115,.20)
+}
+
+.safe{
+  background:#4b9b79;
+  color:#fff
+}
+
+.danger{
+  background:#df4160;
+  color:#fff
+}
+
+.warning{
+  background:#d99a3d;
+  color:#fff
+}
+
+.startBtn{
+  width:100%;
+  background:linear-gradient(135deg,#24163f,#54205c);
+  color:#fff;
+  margin-top:12px
+}
+
+.startBtn:disabled{
+  opacity:.45
+}
+
+.routeCards{
+  margin-top:10px
+}
+
+.routeCard,
+.metric{
+  padding:11px;
+  border-radius:12px;
+  background:#fff2f7;
+  margin-top:8px;
+  font-size:13px
+}
+
+.routeCard strong{
+  font-size:16px
+}
+
+.contentPage{
+  padding-bottom:50px
+}
+
+.contentGrid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  padding:0 28px
+}
+
+.contentGrid.two{
+  grid-template-columns:1fr 1fr
+}
+
+.contentGrid.three{
+  grid-template-columns:repeat(3,1fr)
+}
+
+.card{
+  background:rgba(255,250,253,.94);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(100,36,78,.07)
+}
+
+.wide{
+  min-height:420px
+}
+
+.scoreRing{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  margin:15px auto;
+  background:conic-gradient(var(--green) 75%,#f1dce6 0);
+  font-size:25px;
+  font-weight:900
+}
+
+.reportItem,
+.listItem{
+  border-bottom:1px solid var(--line);
+  padding:12px 0
+}
+
+.reportItem:last-child,
+.listItem:last-child{
+  border:0
+}
+
+.full{
+  width:100%;
+  margin-top:12px
+}
+
+.ghost{
+  background:#f7e8ef;
+  color:#4a2b4b
+}
+
+.emergencyGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+  padding:0 28px
+}
+
+.dangerCard{
+  background:linear-gradient(135deg,#fff3f5,#fffafd);
+  border-color:#f2bcc9
+}
+
+.big{
+  font-size:17px;
+  padding:15px
+}
+
+.formCard{
+  max-width:760px;
+  margin:0 28px
+}
+
+.formCard select{
+  margin-bottom:10px
+}
+
+.formCard textarea{
+  margin:10px 0
+}
+
+.chatCard{
+  max-width:850px;
+  margin:0 auto;
+  min-height:500px;
+  display:flex;
+  flex-direction:column
+}
+
+.chatInput{
+  display:flex;
+  gap:8px;
+  margin-top:auto
+}
+
+.chatMessages{
+  display:flex;
+  flex-direction:column;
+  gap:12px
+}
+
+.aiMsg,
+.userMsg{
+  padding:12px 14px;
+  border-radius:15px;
+  max-width:85%;
+  line-height:1.45
+}
+
+.aiMsg{
+  background:#f7e8f5;
+  color:#3b2542
+}
+
+.userMsg{
+  background:#fde4ef;
+  color:#3b2542;
+  align-self:flex-end
+}
+
+.analyticsGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  padding:0 28px
+}
+
+.stat{
+  background:rgba(255,250,253,.94);
+  border:1px solid var(--line);
+  padding:22px;
+  border-radius:18px
+}
+
+.stat b{
+  font-size:30px;
+  display:block;
+  margin-top:8px
+}
+
+.toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px
+}
+
+.toggle input{
+  width:auto
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(43,19,51,.72);
+  z-index:100;
+  display:grid;
+  place-items:center;
+  padding:18px
+}
+
+.hidden{
+  display:none!important
+}
+
+.modalCard{
+  width:min(620px,100%);
+  background:#fffafd;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:30px;
+  position:relative;
+  box-shadow:0 30px 90px rgba(48,18,48,.28)
+}
+
+.close{
+  position:absolute;
+  right:14px;
+  top:14px;
+  border-radius:50%;
+  font-size:24px;
+  padding:5px 10px;
+  background:#fde8f1;
+  color:#8d315f
+}
+
+.navInstruction{
+  font-size:22px;
+  font-weight:800;
+  padding:22px 0;
+  line-height:1.35
+}
+
+.modalActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px
+}
+
+.tabs button.selected{
+  background:linear-gradient(100deg,#d21f73,#9a4fb0);
+  color:white
+}
+
+.authCard input{
+  margin-top:10px
+}
+
+#toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:linear-gradient(135deg,#24163f,#5a215e);
+  color:#fff;
+  padding:13px 17px;
+  border-radius:12px;
+  display:none;
+  z-index:200
+}
+
+.dark{
+  --bg:#21142a;
+  --card:#2c1a35;
+  --text:#fff0f7;
+  --muted:#d0b6c8;
+  --line:#52334f;
+  --soft:#43233f;
+  --nav:#160e20;
+}
+
+.dark input,
+.dark select,
+.dark textarea{
+  background:#21142a;
+  color:#fff0f7;
+  border-color:#62405c
+}
+
+.dark .routeCard,
+.dark .metric{
+  background:#382039
+}
+
+.dark .aiMsg{
+  background:#432b48
+}
+
+.dark .userMsg{
+  background:#542642
+}
+
+.dark .card,
+.dark .stat,
+.dark .routePanel,
+.dark .modalCard{
+  background:#2c1a35;
+  border-color:#52334f
+}
+
+.leaflet-container{
+  font-family:inherit
+}
+
+@media(max-width:1000px){
+  #sidebar{
+    width:72px;
+    padding:14px 8px
+  }
+
+  .brand span,
+  .brand b,
+  .profile div:nth-child(2),
+  .sidebarFoot,
+  .nav span{
+    display:none
+  }
+
+  .profile{
+    justify-content:center
+  }
+
+  .nav{
+    text-align:center;
+    padding:13px 4px;
+    font-size:19px
+  }
+
+  main{
+    margin-left:72px;
+    width:calc(100% - 72px)
+  }
+
+  .contentGrid.three{
+    grid-template-columns:1fr 1fr
+  }
+
+  .analyticsGrid{
+    grid-template-columns:1fr 1fr
+  }
+}
+
+@media(max-width:760px){
+  #sidebar{
+    transform:translateX(-100%);
+    width:260px;
+    transition:.2s
+  }
+
+  .brand span,
+  .brand b,
+  .profile div:nth-child(2),
+  .sidebarFoot,
+  .nav span{
+    display:block
+  }
+
+  .nav{
+    text-align:left;
+    font-size:14px
+  }
+
+  .nav span{
+    display:inline
+  }
+
+  .profile{
+    justify-content:flex-start
+  }
+
+  .sidebar.open{
+    transform:translateX(0)
+  }
+
+  main{
+    margin-left:0;
+    width:100%
+  }
+
+  .mobileMenu{
+    display:inline-block;
+    margin-right:10px
+  }
+
+  .topbar{
+    padding:16px;
+    align-items:flex-start
+  }
+
+  .topbar>div{
+    flex:1
+  }
+
+  .pill{
+    display:none
+  }
+
+  .mapLayout{
+    height:auto;
+    flex-direction:column
+  }
+
+  .routePanel{
+    width:100%;
+    border-right:0
+  }
+
+  .mapLayout #map{
+    height:55vh;
+    min-height:420px
+  }
+
+  .contentGrid,
+  .contentGrid.two,
+  .contentGrid.three,
+  .emergencyGrid{
+    grid-template-columns:1fr;
+    padding:0 16px
+  }
+
+  .analyticsGrid{
+    grid-template-columns:1fr 1fr;
+    padding:0 16px
+  }
+
+  .formCard{
+    margin:0 16px
+  }
+
+  .chatCard{
+    margin:0 16px
+  }
+
+  .searchRow,
+  .chatInput{
+    flex-direction:column
+  }
+
+  .routeButtons{
+    flex-direction:column
+  }
+
+  .modalCard{
+    padding:25px 20px
+  }
+}
+
+/* =========================================
+   SAFE NAVIGATION PANEL FIX
+   ========================================= */
+
+/* Desktop: Navigation stays in the route panel area */
+#navModal.modal {
+    position: fixed;
+
+    top: 105px;
+    bottom: 0;
+
+    left: 255px;
+    width: 410px;
+
+    inset: auto auto 0 255px;
+
+    background: #fffafd;
+
+    display: block;
+
+    padding: 24px;
+
+    z-index: 90;
+
+    overflow-y: auto;
+
+    border-right: 1px solid #efc9da;
+
+    box-shadow: 8px 0 25px rgba(93, 35, 77, 0.08);
+}
+
+/* Hidden navigation panel */
+#navModal.hidden {
+    display: none !important;
+}
+
+/* Navigation card fills the entire route panel */
+#navModal .modalCard {
+    width: 100%;
+    min-height: 100%;
+
+    background: transparent;
+
+    border-radius: 0;
+
+    padding: 12px;
+
+    box-shadow: none;
+
+    position: relative;
+}
+
+/* Navigation instruction */
+#navModal .navInstruction {
+    font-size: 24px;
+    font-weight: 800;
+
+    line-height: 1.4;
+
+    margin-top: 20px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid #efc9da;
+
+    color: #24153f;
+}
+
+/* Progress section */
+#navModal #navProgress {
+    margin-top: 20px;
+
+    font-size: 15px;
+
+    color: #806b82;
+}
+
+/* Navigation buttons */
+#navModal .modalActions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+#navModal .modalActions button {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #f7e8ef;
+
+    color: #3a2544;
+
+    border-radius: 12px;
+}
+
+#navModal .modalActions button:hover {
+    background: #fde0ec;
+}
+
+/* Primary navigation button */
+#navModal .modalActions .primary {
+    background: linear-gradient(
+        100deg,
+        #d21f73,
+        #9a4fb0
+    );
+
+    color: #ffffff;
+
+    box-shadow: 0 8px 20px rgba(210, 31, 115, 0.20);
+}
+
+#navModal .modalActions .primary:hover {
+    background: linear-gradient(
+        100deg,
+        #b81764,
+        #7f3f98
+    );
+}
+
+/* Close button */
+#navModal .close {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    font-size: 24px;
+
+    background: #fde8f1;
+
+    color: #8d315f;
+
+    border: 1px solid #efc9da;
+}
+
+#navModal .close:hover {
+    background: #f8d7e6;
+    color: #b81764;
+}
+
+/* Destination title */
+#navModal #navDestination {
+    padding-right: 50px;
+
+    margin-top: 10px;
+
+    line-height: 1.3;
+
+    color: #24153f;
+}
+
+
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+@media (max-width: 760px) {
+
+    #navModal.modal {
+        position: fixed;
+
+        top: auto;
+        bottom: 0;
+
+        left: 0;
+        right: 0;
+
+        width: 100%;
+
+        max-height: 70vh;
+
+        padding: 20px;
+
+        background: #fffafd;
+
+        border-radius: 24px 24px 0 0;
+
+        border-right: 0;
+
+        border-top: 1px solid #efc9da;
+
+        z-index: 200;
+
+        overflow-y: auto;
+
+        box-shadow:
+            0 -10px 40px rgba(93, 35, 77, 0.15);
+    }
+
+
+    #navModal .modalCard {
+        padding: 10px;
+    }
+
+
+    #navModal .navInstruction {
+        font-size: 20px;
+
+        color: #24153f;
+    }
+}
+
+
+/* =========================================
+   DYUTA CUSTOM LOGO
+========================================= */
+
+.dyutaLogoImage {
+    width: 300px;
+    height: 150px;
+
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 5px;
+
+    background: transparent;
+    border: none;
+
+    filter:
+        drop-shadow(
+            0 7px 15px rgba(150, 25, 90, 0.20)
+        );
+}
+
+
+/* =========================================
+   MOBILE LOGO
+========================================= */
+
+@media (max-width: 760px) {
+
+    .dyutaLogoImage {
+        width: 220px;
+height: 220px;
+    }
+
+}
+/* =========================================
+   GUARDIAN AI
+   ========================================= */
+
+.guardianAiCard {
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    padding: 50px;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        rgba(253,232,241,0.92),
+        rgba(255,250,253,0.98)
+    );
+
+    border: 1px solid #efc9da;
+
+    border-radius: 24px;
+
+    box-shadow: 0 15px 40px rgba(110,39,88,0.09);
+}
+
+.guardianAiIntro {
+    max-width: 700px;
+    margin: auto;
+}
+
+.guardianAiIntro h2 {
+    font-size: 32px;
+
+    margin: 12px 0;
+
+    color: #24153f;
+}
+
+.guardianAiIntro p {
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+
+    color: #806b82;
+}
+
+.guardianAiButton {
+    padding: 16px 30px;
+
+    font-size: 17px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    background: linear-gradient(
+        100deg,
+        #d21f73,
+        #9a4fb0
+    );
+
+    color: #ffffff;
+
+    box-shadow: 0 8px 20px rgba(210,31,115,0.20);
+
+    transition: 0.2s ease;
+}
+
+.guardianAiButton:hover {
+    background: linear-gradient(
+        100deg,
+        #b81764,
+        #7f3f98
+    );
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   FINAL LAYER FIX - MAP MUST STAY BELOW POPUPS
+========================================= */
+
+/* Keep the map in a lower stacking layer */
+.mapLayout {
+    position: relative;
+    z-index: 1;
+}
+
+#map {
+    position: relative;
+    z-index: 1;
+}
+
+/* Leaflet map and its controls stay below modals */
+.leaflet-container {
+    z-index: 1 !important;
+}
+
+/* Authentication modal always stays above the map */
+#authModal,
+#loginModal,
+.modal {
+    z-index: 9999 !important;
+}
+
+/* Modal content stays above modal background */
+.modalCard {
+    position: relative;
+    z-index: 10000 !important;
+}
+
+/* Toast should be above normal pages but below/independent */
+#toast {
+    z-index: 11000;
+}
+
+
+/* =========================================
+   EMERGENCY CALL BUTTON
+========================================= */
+
+.emergency-call-btn {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #df4160,
+        #c52f4f
+    );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    box-shadow: 0 8px 20px rgba(223,65,96,0.18);
+}
+
+.emergency-call-btn:hover {
+    transform: scale(1.02);
+
+    opacity: 0.95;
+
+    background: linear-gradient(
+        135deg,
+        #d63858,
+        #b92d4a
+    );
+}
+
+.emergency-call-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================================
+   SAVED PLACES - IMPROVED DESIGN
+========================================= */
+
+.savedPlaceForm {
+    position: relative;
+}
+
+.savedPlaceText {
+    color: #806b82;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* QUICK PLACE BUTTONS */
+
+.quickPlaceButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.quickPlace {
+    background: #fff2f7;
+    border: 1px solid #efc9da;
+    color: #24153f;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.quickPlace:hover {
+    background: #fde0ec;
+    transform: translateY(-2px);
+}
+
+
+/* LOCATION STATUS */
+
+.locationStatus {
+    margin-top: 12px;
+    padding: 12px;
+    background: #fff0f6;
+    border: 1px dashed #e4b5cc;
+    border-radius: 12px;
+    color: #806b82;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* SAVED PLACES HEADER */
+
+.savedPlacesCard {
+    min-height: 420px;
+}
+
+.savedPlacesHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.savedPlacesHeader h2 {
+    margin-bottom: 0;
+    color: #24153f;
+}
+
+
+/* PLACE COUNT */
+
+.placeCount {
+    background: #fde8f1;
+    color: #c21f6d;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+
+/* EMPTY STATE */
+
+.emptyPlaces {
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    color: #806b82;
+}
+
+.emptyPlaces h3 {
+    color: #24153f;
+    margin: 15px 0 8px;
+}
+
+.emptyPlaces p {
+    max-width: 330px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.emptyIcon,
+.emptyPlacesIcon {
+    width: 70px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fde8f1;
+    color: #c52270;
+    font-size: 32px;
+}
+
+
+/* SAVED PLACE CARD */
+
+.savedPlaceCard {
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid #efc9da;
+    border-radius: 16px;
+    background: #fffafd;
+    transition: 0.2s;
+}
+
+.savedPlaceCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(100, 36, 78, 0.10);
+}
+
+
+/* PLACE TOP SECTION */
+
+.savedPlaceTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.placeIcon {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+    background: #fde8f1;
+    color: #c52270;
+
+    font-size: 22px;
+}
+
+.placeInfo {
+    min-width: 0;
+}
+
+.placeInfo h3 {
+    margin: 2px 0 6px;
+    font-size: 16px;
+    color: #24153f;
+}
+
+.placeInfo p {
+    margin: 0;
+    color: #806b82;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* SAVED PLACE ACTIONS */
+
+.savedPlaceActions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.savedPlaceActions button {
+    flex: 1;
+}
+
+.usePlaceBtn {
+    background: linear-gradient(
+        100deg,
+        #d21f73,
+        #9a4fb0
+    );
+
+    color: white;
+
+    box-shadow: 0 6px 16px rgba(210, 31, 115, 0.16);
+}
+
+.usePlaceBtn:hover {
+    background: linear-gradient(
+        100deg,
+        #b81764,
+        #7f3f98
+    );
+}
+
+.deletePlaceBtn {
+    background: #fff0f3;
+    color: #d43b58;
+    border: 1px solid #f2c6d0;
+}
+
+.deletePlaceBtn:hover {
+    background: #ffe3e9;
+}
+
+
+/* DARK MODE SUPPORT */
+
+.dark .savedPlaceCard {
+    background: #2c1a35;
+    border-color: #52334f;
+}
+
+.dark .quickPlace {
+    background: #382039;
+    color: #fff0f7;
+    border-color: #52334f;
+}
+
+.dark .quickPlace:hover {
+    background: #462643;
+}
+
+.dark .locationStatus {
+    background: #382039;
+    border-color: #62405c;
+    color: #d0b6c8;
+}
+
+.dark .emptyPlaces h3 {
+    color: #fff0f7;
+}
+
+.dark .placeInfo h3 {
+    color: #fff0f7;
+}
+
+.dark .deletePlaceBtn {
+    background: #4b2632;
+    color: #ff9aae;
+    border-color: #693844;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+
+    .quickPlaceButtons {
+        gap: 8px;
+    }
+
+    .quickPlace {
+        flex: 1 1 40%;
+    }
+
+    .savedPlacesHeader {
+        align-items: center;
+    }
+
+    .savedPlaceActions {
+        flex-direction: column;
+    }
+
+}
+
+
+/* ========================================
+   GUARDIANMAP PROFESSIONAL UI UPGRADE
+======================================== */
+
+/* ---------- Global ---------- */
+
+:root {
+    --primary: #d21f73;
+    --primary-dark: #aa1459;
+    --secondary: #fde8f1;
+    --danger: #df4160;
+    --danger-dark: #bd2948;
+    --success: #4b9b79;
+    --text: #24153f;
+    --muted: #806b82;
+    --border: #efc9da;
+    --background: #fff4f8;
+    --white: #fffafd;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(238, 159, 202, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(255, 190, 205, 0.16),
+            transparent 30%
+        ),
+        var(--background);
+
+    color: var(--text);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ---------- Cards ---------- */
+
+.card,
+.panel,
+.metric {
+    background: rgba(255, 250, 253, 0.94);
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 24px rgba(100, 36, 78, 0.07);
+}
+
+.card,
+.panel {
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+
+/* ---------- Headings ---------- */
+
+h1,
+h2,
+h3 {
+    color: #24153f;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+
+/* ---------- Normal Buttons ---------- */
+
+button {
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 15px rgba(177, 42, 108, 0.10);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* ---------- Primary Button ---------- */
+
+.primary,
+button.primary {
+    background: linear-gradient(
+        100deg,
+        #d21f73,
+        #9a4fb0
+    );
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px rgba(210, 31, 115, 0.20);
+}
+
+.primary:hover,
+button.primary:hover {
+    background: linear-gradient(
+        100deg,
+        #b81764,
+        #7f3f98
+    );
+}
+/* ---------- Danger Buttons ---------- */
+
+.danger,
+button.danger {
+    background: #df4160;
+    color: white;
+}
+
+.danger:hover,
+button.danger:hover {
+    background: #bd2948;
+}
+
+
+/* ---------- Inputs ---------- */
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1px solid #efc9da;
+    background: #fffafd;
+    color: #24153f;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #d21f73;
+    box-shadow: 0 0 0 3px rgba(210, 31, 115, 0.12);
+}
+
+
+/* ---------- Emergency Box ---------- */
+
+.emergency-box {
+    border: 2px solid #df4160 !important;
+
+    background: linear-gradient(
+        135deg,
+        #fff3f5,
+        #fffafd
+    ) !important;
+}
+
+.emergency-title {
+    color: #d63b59;
+    font-size: 18px;
+}
+
+
+/* ---------- Follow Me ---------- */
+
+#followStatus {
+    margin-top: 15px;
+}
+
+#checkinBox .metric {
+    border-left: 5px solid #d21f73;
+}
+
+
+/* ---------- Trusted Contacts ---------- */
+
+.listItem {
+    background: #fffafd;
+    border: 1px solid #efc9da;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+
+    box-shadow: 0 5px 14px rgba(100, 36, 78, 0.05);
+}
+
+.listItem b {
+    font-size: 16px;
+    color: #24153f;
+}
+
+.listItem small {
+    color: #806b82;
+}
+
+
+/* ---------- Emergency Call Button ---------- */
+
+.emergency-call-btn {
+    width: 100%;
+
+    background: linear-gradient(
+        135deg,
+        #df4160,
+        #c52f4f
+    );
+
+    color: white;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    margin-top: 12px;
+
+    box-shadow: 0 7px 18px rgba(223, 65, 96, 0.18);
+}
+
+.emergency-call-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #d63858,
+        #b92d4a
+    );
+}
+
+
+/* ---------- Navigation / Map ---------- */
+
+#map {
+    border-radius: 18px;
+    overflow: hidden;
+
+    border: 1px solid #efc9da;
+
+    box-shadow:
+        0 10px 30px rgba(100, 36, 78, 0.08);
+}
+
+
+/* ---------- Status Metric ---------- */
+
+.metric {
+    padding: 16px;
+    margin-top: 12px;
+    line-height: 1.6;
+
+    background: #fffafd;
+    border-color: #efc9da;
+}
+
+
+/* ---------- Better Emergency Button ---------- */
+
+.emergency-main-button {
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #df4160,
+        #b92d4a
+    );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 10px 25px rgba(223, 65, 96, 0.28);
+}
+
+.emergency-main-button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 768px) {
+
+    .card,
+    .panel {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    #map {
+        min-height: 350px;
+    }
+}
+
+
+/* =========================================
+   📹 CCTV COVERAGE LEGEND
+========================================= */
+
+.cctv-legend {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    z-index: 2000;
+
+    background: rgba(255, 250, 253, 0.97);
+    color: #24153f;
+
+    border: 1px solid #efc9da;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(93, 35, 77, 0.14);
+
+    min-width: 230px;
+    max-width: 270px;
+
+    overflow: hidden;
+
+    transition:
+        width 0.3s ease,
+        min-width 0.3s ease,
+        opacity 0.25s ease,
+        transform 0.3s ease;
+}
+
+
+/* =========================================
+   CCTV HEADER
+========================================= */
+
+.cctv-legend-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    color: #24153f;
+}
+
+
+/* =========================================
+   CCTV TOGGLE BUTTON
+========================================= */
+
+#cctvLegendToggle {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #fde8f1;
+    color: #c21f6d;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+#cctvLegendToggle:hover {
+    background: #f8d7e6;
+    transform: scale(1.05);
+}
+
+
+/* =========================================
+   CCTV CONTENT
+========================================= */
+
+#cctvLegendContent {
+    padding: 0 14px 14px 14px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: #49304d;
+}
+
+#cctvLegendContent div {
+    margin-top: 5px;
+}
+
+#cctvLegendContent small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #806b82;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   COLLAPSED CCTV STATE
+========================================= */
+
+.cctv-legend.collapsed {
+    min-width: 52px;
+    width: 52px;
+
+    background: rgba(255, 250, 253, 0.98);
+
+    border-color: #efc9da;
+
+    border-radius: 14px;
+}
+
+.cctv-legend.collapsed .cctv-legend-header {
+    padding: 9px;
+}
+
+.cctv-legend.collapsed .cctv-legend-header b {
+    display: none;
+}
+
+.cctv-legend.collapsed #cctvLegendContent {
+    display: none;
+}
+
+
+/* =========================================
+   MAP SHOULD REMAIN FULLY VISIBLE
+========================================= */
+
+.mapLayout {
+    position: relative;
+}
+
+.mapLayout #map {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+.dark .cctv-legend {
+    background: #2c1a35;
+    color: #fff0f7;
+
+    border-color: #52334f;
+}
+
+.dark .cctv-legend-header {
+    color: #fff0f7;
+}
+
+.dark #cctvLegendToggle {
+    background: #43233f;
+    color: #ff72ae;
+}
+
+.dark #cctvLegendToggle:hover {
+    background: #542943;
+}
+
+.dark #cctvLegendContent {
+    color: #ead4e2;
+}
+
+.dark #cctvLegendContent small {
+    color: #d0b6c8;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+
+    .cctv-legend {
+        top: 10px;
+        right: 10px;
+
+        min-width: 200px;
+        max-width: 230px;
+    }
+
+    .cctv-legend.collapsed {
+        width: 48px;
+        min-width: 48px;
+    }
+
+}
+/* =========================================
+   DYUTA LANDING PAGE
+========================================= */
+
+#landingPage {
+    position: fixed;
+    inset: 0;
+    z-index: 50000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background-image: url("/static/background-img.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Keeps the background clear and vivid */
+    background-color: #f4b5d2;
+}
+/* Background glow */
+
+#landingPage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 70%,
+            rgba(210, 31, 115, 0.18),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(130, 70, 180, 0.18),
+            transparent 28%
+        );
+}
+
+
+/* Overlay */
+
+.landingOverlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.12),
+            rgba(255,220,235,.28)
+        );
+}
+
+
+/* Main content */
+
+.landingContent {
+    position: relative;
+    z-index: 2;
+
+    width: min(1000px, 92%);
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* =========================================
+   DYUTA LOGO
+========================================= */
+
+.dyutaLogo {
+    margin-bottom: 15px;
+}
+/* =========================================
+   DYUTA CUSTOM LOGO IMAGE
+========================================= */
+
+.dyutaLogoImage {
+    width: 300px;
+    height: 150px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0 auto 8px;
+
+    filter: drop-shadow(
+        0 6px 12px rgba(180, 30, 110, 0.18)
+    );
+}
+
+
+
+
+/* =========================================
+   DYUTA LANDING CONTENT
+========================================= */
+
+.landingContent {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    text-align: center;
+
+    padding-top: 95px;
+}
+
+
+/* =========================================
+   DYUTA LOGO / TITLE
+========================================= */
+
+.dyutaLogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    margin: 0;
+}
+
+
+/* =========================================
+   LOCATION PIN
+========================================= */
+
+.dyutaPin {
+    width: 65px;
+    height: 65px;
+
+    margin-bottom: 8px;
+
+    background: #df1674;
+
+    border-radius: 50% 50% 50% 0;
+
+    transform: rotate(-45deg);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 6px 18px rgba(190, 20, 100, 0.25);
+}
+
+
+.dyutaPin span {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+}
+
+
+/* =========================================
+   DYUTA NAME
+========================================= */
+
+.dyutaName {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(70px, 8vw, 108px);
+
+    line-height: 0.9;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    color: #101536;
+
+    margin: 0;
+
+    text-shadow:
+        0 2px 4px rgba(255,255,255,0.35);
+}
+
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.dyutaSubtitle {
+    margin-top: 10px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(18px, 2.2vw, 27px);
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color: #171537;
+
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   MOTTO
+========================================= */
+
+.dyutaMotto {
+    margin-top: 32px;
+
+    padding: 0;
+
+    max-width: 800px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(17px, 2vw, 24px);
+
+    font-style: italic;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    color: #211333;
+
+    background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+    text-shadow:
+        0 1px 4px rgba(255,255,255,0.65);
+}
+
+
+/* =========================================
+   HIDE UNWANTED EXTRA CONTENT
+========================================= */
+
+.landingFeatures {
+    display: none !important;
+}
+
+.landingDescription {
+    display: none !important;
+}
+
+
+/* =========================================
+   ENTER DYUTA BUTTON
+========================================= */
+
+.landingStartBtn {
+    margin-top: 35px;
+
+    min-width: 205px;
+
+    padding: 14px 28px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #d21f73,
+            #a642a7
+        );
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 24px rgba(190, 25, 105, 0.28);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    
+}
+
+
+.landingStartBtn span {
+    margin-left: 5px;
+
+    font-size: 19px;
+}
+
+
+.landingStartBtn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 28px rgba(190, 25, 105, 0.35);
+}
+
+#landingPage.landingHidden {
+    display: none !important;
+}
+
+/* =========================================
+   LANDING EXIT
+========================================= */
+
+#landingPage.landingExit {
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: scale(1.02);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        visibility 0.45s ease;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+
+    .landingContent {
+        padding-top: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .dyutaPin {
+        width: 52px;
+        height: 52px;
+    }
+
+    .dyutaPin span {
+        width: 16px;
+        height: 16px;
+    }
+
+    .dyutaName {
+        font-size: 58px;
+        letter-spacing: 2px;
+    }
+
+    .dyutaSubtitle {
+        font-size: 17px;
+        margin-top: 9px;
+    }
+
+    .dyutaMotto {
+        margin-top: 23px;
+
+        max-width: 90%;
+
+        font-size: 14px;
+    }
+
+    .landingStartBtn {
+        margin-top: 27px;
+
+        min-width: 180px;
+
+        padding: 13px 24px;
+    }
+}

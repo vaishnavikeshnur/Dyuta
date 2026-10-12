@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GuardianMap | Safety-Aware Navigation</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- =========================================
+     DYUTA LANDING PAGE
+========================================= -->
+
+<section id="landingPage" class="dyutaLanding">
+
+    <div class="landingOverlay"></div>
+
+    <div class="landingContent">
+
+       <div class="dyutaLogo">
+
+    <img
+        src="/static/logo-img.png"
+        alt="DYUTA Women Safety Logo"
+        class="dyutaLogoImage"
+    >
+
+    <div class="dyutaName">
+        DYUTA
+    </div>
+
+    <div class="dyutaSubtitle">
+        A Guardian Map for Women Safety
+    </div>
+
+</div>
+
+
+        <!-- MOTTO -->
+        <div class="dyutaMotto">
+            “A city isn't truly smart until every women feels safe”
+        </div>
+
+
+        <!-- ENTER BUTTON -->
+        <button
+    type="button"
+    class="landingStartBtn"
+    onclick="
+        document.getElementById('landingPage').classList.add('landingExit');
+        setTimeout(() => {
+            document.getElementById('landingPage').style.display = 'none';
+        }, 450);
+    ">
+    Enter DYUTA →
+</button>
+
+    </div>
+
+</section>
+       
+
+
+
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="brand"><div class="logo">🛡</div><div><b>DYUTA</b><span>An invisible shield across visible streets.</span></div></div>
+    <div class="profile" id="profileBox">
+      <div class="avatar" id="avatar">G</div><div><b id="profileName">Guest</b><small id="profileEmail">Log in to save your safety data</small></div>
+      <button class="iconBtn" onclick="openAuth()">⇢</button>
+    </div>
+    <nav>
+      <button class="nav active" data-page="navigate">🗺️ <span>Navigate</span></button>
+      <button class="nav" data-page="safety">🛡️ <span>Safety Map</span></button>
+      <button class="nav" data-page="follow">📍 <span>Follow Me</span></button>
+      <button class="nav emergency" data-page="emergency">🚨 <span>Emergency</span></button>
+      <button class="nav" data-page="places">🏠 <span>Saved Places</span></button>
+      <button class="nav" data-page="trusted">👥 <span>Trusted Circle</span></button>
+      <button class="nav" data-page="report">📝 <span>Report Safety Issue</span></button>
+      <button class="nav" data-page="workplace">🏢 <span>Workplace Safety</span></button>
+      <button class="nav" data-page="ai">🤖 <span>Guardian AI</span></button>
+      <button class="nav" data-page="analytics">📊 <span>My Safety</span></button>
+      <button class="nav" data-page="settings">⚙️ <span>Settings</span></button>
+    </nav>
+    <div class="sidebarFoot">Walking you home like a best friend, <br><span>protecting you like a shield.</span></div>
+  </aside>
+
+  <main>
+    <section id="page-navigate" class="page active">
+      <div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Safe Navigation</h1><p>Real location, destination search, routing and safety guidance.</p></div><button class="pill" onclick="openAuth()">Login / Account</button></div>
+      <div class="mapLayout">
+
+   <div id="routePanel" class="routePanel">
+    <button
+    class="routePanelToggle"
+    onclick="toggleRoutePanel()"
+    title="Hide navigation panel"
+>
+    ‹
+</button>
+          <div class="eyebrow">SAFETY-AWARE ROUTING</div>
+          <h2>Find a route that feels safer.</h2>
+          <button class="locationBtn" onclick="useLocation()">📍 Use My Current Location</button>
+          <label>Current location</label><input id="originText" readonly placeholder="Location not selected">
+          <label>Where are you going?</label>
+          <div class="searchRow"><input id="destinationInput" placeholder="Search place, address or landmark"><button onclick="searchPlace()">Search</button></div>
+          <div id="searchResults" class="searchResults"></div>
+          <div class="quickRow"><button onclick="goQuick('Home')">🏠 Home</button><button onclick="goQuick('Office')">🏢 Office</button><button onclick="goQuick('College')">🎓 College</button></div>
+          <label>Travel mode</label>
+          <div class="seg" id="modeSeg"><button data-mode="walking" class="selected">🚶 Walk</button><button data-mode="cycling">🚲 Cycle</button><button data-mode="driving">🚗 Car</button><button data-mode="transit">🚌 Transit</button></div>
+          <div class="routeButtons"><button class="primary" onclick="calculateRoute()">Calculate Route</button><button class="safe" onclick="calculateRoute('safest')">🛡️ Prioritise Safety</button></div>
+          <div id="routeCards" class="routeCards"></div>
+          <button id="startNavigation" class="startBtn" disabled onclick="startNavigation()">▶ Start Safe Navigation</button>
+        </div>
+        <div id="map"></div>
+   <div id="cctvLegend" class="cctv-legend collapsed">
+
+    <div class="cctv-legend-header">
+
+        <b>📹 CCTV Coverage</b>
+
+        <button
+            id="cctvLegendToggle"
+            type="button"
+            aria-label="Show CCTV information"
+        >›</button>
+
+    </div>
+    <div id="cctvLegendContent">
+        <div>🟢 CCTV-covered area</div>
+        <div>📹 Registered CCTV</div>
+        <small>
+            Coverage shown from known/registered CCTV data.
+        </small>
+    </div>
+</div>
+      </div>
+    </section>
+
+    <section id="page-safety" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Community Safety Map</h1><p>Recent community reports and advisory safety intelligence.</p></div></div><div class="contentGrid"><div class="card wide"><h2>Safety Reports Near You</h2><div id="reportFeed"></div></div><div class="card"><h2>Area Safety Pulse</h2><div id="pulseBox" class="scoreRing">--</div><p id="pulseText">Load your current location to analyse nearby reports.</p></div></div></section>
+
+    <section id="page-follow" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Follow Me</h1><p>Consent-based virtual escort and check-ins.</p></div></div><div class="contentGrid two"><div class="card"><h2>Start Virtual Escort</h2><label>Check-in interval</label><select id="checkInterval"><option value="30">30 seconds</option><option value="60">1 minute</option><option value="120">2 minutes</option></select><button class="primary full" onclick="startFollow()">Start Follow Me</button><button class="ghost full" onclick="stopFollow()">Stop</button><div id="followStatus"></div></div><div class="card"><h2>Safety Check-In</h2><p>GuardianMap will ask if you are safe while the escort session is active.</p><div id="checkinBox"></div><button onclick="checkIn('safe')">I'm Safe</button> <button class="danger" onclick="checkIn('help')">Need Help</button></div></div></section>
+
+    <section id="page-emergency" class="page contentPage emergencyPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Emergency & Safe Haven</h1><p>For a prototype, emergency escalation actions are clearly labelled.</p></div></div><div class="emergencyGrid"><div class="card dangerCard">
+    <h2>🚨 I Need Help</h2>
+
+    <p>
+        If you are in danger, press and hold the SOS button
+        for 3 seconds. You do not need to speak.
+    </p>
+
+    <button id="silentSOSButton" class="danger">
+    🚨 SOS — HOLD / CLICK
+</button>
+<button
+    id="simulateShakeButton"
+    class="primary full"
+    type="button"
+    style="margin-top:10px;"
+>
+    🫨 Simulate Shake SOS
+</button>
+
+<div id="sosHoldStatus">
+    📱 Mobile: press and hold for 3 seconds
+    <br>
+    💻 PC: click once to confirm SOS
+</div>
+
+    <button
+        class="primary full"
+        onclick="findSafeHaven()"
+        style="margin-top:12px;"
+    >
+        🛡️ Find Safe Haven
+    </button>
+</div><div class="card"><h2>👀 I Think Someone Is Following Me</h2><p>Do not route directly to Home. GuardianMap will prioritise a public safe haven and start an escort session.</p><button class="warning full" onclick="stalkingMode()">Start Stalking Safety Mode</button></div><div class="card"><h2>🔋 Battery Survival</h2><p>Reduce updates and keep only essential safety functions active.</p><button class="full" onclick="batteryMode()">Enable Battery Saver</button></div><div class="card"><h2>🎙️ Voice Safety</h2><p>Optional foreground browser voice demo. Say “Guardian Help”.</p><button class="full" onclick="toggleVoice()">Enable / Disable Voice Demo</button></div></div><div id="emergencyOutput" class="card"></div></section>
+<section id="page-places" class="page contentPage">
+
+    <div class="topbar">
+
+        <button class="mobileMenu" onclick="toggleSidebar()">☰</button>
+
+        <div>
+            <h1>Saved Places</h1>
+            <p>
+                Save your important destinations for faster and safer navigation.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="contentGrid two">
+
+
+        <!-- LEFT SIDE - SAVE PLACE -->
+
+        <div class="card savedPlaceForm">
+
+            <div class="eyebrow">
+                QUICK SAFETY ACCESS
+            </div>
+
+            <h2>Save a Safe Place</h2>
+
+            <p class="savedPlaceText">
+                Save important locations such as Home, Office, College,
+                Hostel or a trusted family location.
+            </p>
+
+
+            <!-- QUICK LABEL BUTTONS -->
+
+            <div class="quickPlaceButtons">
+
+                <button
+                    type="button"
+                    class="quickPlace"
+                    onclick="setPlaceLabel('Home')">
+                    🏠 Home
+                </button>
+
+                <button
+                    type="button"
+                    class="quickPlace"
+                    onclick="setPlaceLabel('Office')">
+                    🏢 Office
+                </button>
+
+                <button
+                    type="button"
+                    class="quickPlace"
+                    onclick="setPlaceLabel('College')">
+                    🎓 College
+                </button>
+
+                <button
+                    type="button"
+                    class="quickPlace"
+                    onclick="setPlaceLabel('Other')">
+                    📍 Other
+                </button>
+
+            </div>
+
+
+            <!-- PLACE NAME -->
+
+            <label>Place Name</label>
+
+            <input
+                id="placeLabel"
+                placeholder="Example: Home">
+
+
+            <!-- ADDRESS -->
+
+            <label style="margin-top:15px; display:block;">
+                Address
+            </label>
+
+            <input
+                id="placeAddress"
+                placeholder="Enter complete address or select a destination">
+
+
+            <!-- LOCATION STATUS -->
+
+            <div id="placeLocationStatus" class="locationStatus">
+
+                📍 Save a destination from the Navigate page
+                or enter a location.
+
+            </div>
+
+
+            <!-- SAVE BUTTON -->
+
+            <button
+                class="primary full"
+                onclick="savePlace()">
+
+                🛡️ Save This Safe Place
+
+            </button>
+
+
+        </div>
+
+
+        <!-- RIGHT SIDE - SAVED PLACES -->
+
+        <div class="card savedPlacesCard">
+
+
+            <div class="savedPlacesHeader">
+
+                <div>
+
+                    <div class="eyebrow">
+                        YOUR SAFETY NETWORK
+                    </div>
+
+                    <h2>Your Saved Places</h2>
+
+                </div>
+
+
+                <div
+                    id="placeCount"
+                    class="placeCount">
+
+                    0 Saved
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY / LOADING / SAVED PLACES -->
+
+            <div id="placesList">
+
+
+                <div class="emptyPlaces">
+
+                    <div class="emptyPlacesIcon">
+                        🏠
+                    </div>
+
+                    <h3>No saved places yet</h3>
+
+                    <p>
+                        Save Home, Office, College or another important
+                        destination for quick and safe navigation.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+    <section id="page-trusted" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Trusted Circle</h1><p>You choose exactly who can be part of your safety network.</p></div></div><div class="contentGrid two"><div class="card"><h2>Add Trusted Contact</h2><input id="contactName" placeholder="Name"><input id="contactRelation" placeholder="Relationship (Amma, friend...)" style="margin-top:10px"><input id="contactPhone" placeholder="Phone" style="margin-top:10px"><button class="primary full" onclick="addContact()">Add Contact</button></div><div class="card"><h2>Your Circle</h2><div id="contactsList"></div></div></div></section>
+
+   <section id="page-report" class="page contentPage">
+
+    <div class="topbar">
+        <button class="mobileMenu" onclick="toggleSidebar()">☰</button>
+
+        <div>
+            <div class="eyebrow">COMMUNITY SAFETY INTELLIGENCE</div>
+
+            <h1>Report & Analyze a Safety Issue</h1>
+
+            <p>
+                Describe what happened naturally. Guardian AI will analyze
+                the incident and suggest the category and risk level.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="contentGrid two">
+
+      <!-- LEFT SIDE : CONFIDENTIAL REPORT -->
+
+<div class="card formCard">
+
+    <div class="eyebrow">CONFIDENTIAL SAFETY REPORT</div>
+
+    <h2>Report a Safety Concern</h2>
+
+    <p>
+        Your report and evidence will be shared only with authorized
+        safety personnel. You can choose whether to reveal your identity.
+    </p>
+
+    <!-- REPORT TYPE -->
+
+    <label>What happened?</label>
+
+    <select id="reportType">
+
+        <option value="harassment">Harassment</option>
+
+        <option value="sexual_harassment">
+            Sexual Harassment
+        </option>
+
+        <option value="stalking">
+            Stalking / Following
+        </option>
+
+        <option value="misconduct">
+            Misconduct
+        </option>
+
+        <option value="threat">
+            Threat / Intimidation
+        </option>
+
+        <option value="assault">
+            Assault / Physical Safety Threat
+        </option>
+
+        <option value="unsafe_location">
+            Unsafe Location
+        </option>
+
+        <option value="suspicious_activity">
+            Suspicious Activity
+        </option>
+
+        <option value="other">
+            Other
+        </option>
+
+    </select>
+
+
+    <!-- DESCRIPTION -->
+
+    <label style="margin-top:15px; display:block;">
+        Describe what happened
+    </label>
+
+    <textarea
+        id="reportDescription"
+        placeholder="Describe the incident in your own words. Do not include information you do not want to share."
+    ></textarea>
+
+
+    <!-- EVIDENCE -->
+
+    <div
+        class="metric"
+        style="margin-top:15px"
+    >
+
+        <b>📎 Evidence (Optional)</b>
+
+        <p>
+            You may attach photos, videos or audio recordings
+            that can help authorized safety personnel understand
+            the incident.
+        </p>
+
+        <!-- IMAGE -->
+
+        <label>📷 Photos</label>
+
+        <input
+            type="file"
+            id="reportImages"
+            accept="image/*"
+            multiple
+        >
+
+
+        <!-- VIDEO -->
+
+        <label style="margin-top:12px; display:block;">
+            🎥 Videos
+        </label>
+
+        <input
+            type="file"
+            id="reportVideos"
+            accept="video/*"
+            multiple
+        >
+
+
+        <!-- AUDIO -->
+
+        <label style="margin-top:12px; display:block;">
+            🎙️ Audio / Voice Recording
+        </label>
+
+        <input
+            type="file"
+            id="reportAudio"
+            accept="audio/*"
+            multiple
+        >
+
+    </div>
+
+
+    <!-- PRIVACY -->
+
+    <div
+        class="metric"
+        style="margin-top:15px"
+    >
+
+        <b>🔒 Privacy & Confidentiality</b>
+
+        <p>
+            Your evidence is intended only for authorized
+            safety personnel. It should not be displayed
+            publicly on the safety map.
+        </p>
+
+    </div>
+
+
+    <!-- IDENTITY OPTION -->
+
+    <label style="margin-top:15px; display:block;">
+        Reporting preference
+    </label>
+
+    <select id="reportPrivacy">
+
+        <option value="confidential">
+            Confidential — identity visible only to authorized personnel
+        </option>
+
+        <option value="anonymous">
+            Anonymous — do not attach my identity to the report
+        </option>
+
+    </select>
+
+
+    <!-- LOCATION -->
+
+    <label style="margin-top:15px; display:block;">
+        Incident location
+    </label>
+
+    <select id="reportLocationMode">
+
+        <option value="current">
+            Use my current location
+        </option>
+
+        <option value="hidden">
+            Keep exact location private
+        </option>
+
+    </select>
+
+
+    <div
+        id="reportLocationInfo"
+        class="metric"
+        style="margin-top:15px"
+    >
+        📍 Location will be handled according to your privacy choice.
+    </div>
+
+
+    <!-- EMERGENCY FLAG -->
+
+    <label
+        style="
+            margin-top:15px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+        "
+    >
+
+        <input
+            type="checkbox"
+            id="reportEmergency"
+        >
+
+        🚨 This incident requires urgent attention
+
+    </label>
+
+
+    <!-- AI BUTTON -->
+
+    <div style="margin-top:15px">
+
+        <button
+            id="analyzeReportBtn"
+            type="button"
+            class="primary full"
+        >
+            ✨ Analyze with Guardian AI
+        </button>
+
+    </div>
+
+
+    <!-- AI LOADING -->
+
+    <div
+        id="reportAiLoading"
+        style="display:none; margin-top:15px"
+    >
+        🤖 Guardian AI is analyzing the incident...
+    </div>
+
+
+    <!-- EVIDENCE STATUS -->
+
+    <div
+        id="evidenceStatus"
+        class="metric"
+        style="display:none; margin-top:15px"
+    ></div>
+
+</div>
+<!-- REPORT TRACKING -->
+<div
+    id="reportTracking"
+    class="metric"
+    style="display:none; margin-top:15px"
+>
+    <b>🛡️ Report Tracking</b>
+
+    <div style="margin-top:10px;">
+        <strong>Report ID:</strong>
+        <span id="reportTrackingId">---</span>
+    </div>
+
+    <div style="margin-top:8px;">
+        <strong>Review Status:</strong>
+        <span id="reportReviewStatus">Pending</span>
+    </div>
+
+    <div style="margin-top:8px;">
+        <strong>Evidence:</strong>
+        <span id="reportEvidenceStatus">Not uploaded</span>
+    </div>
+
+    <div style="margin-top:8px;">
+        <strong>Privacy:</strong>
+        <span id="reportPrivacyStatus">Confidential</span>
+    </div>
+
+    <p style="margin-top:12px;">
+        Your report has been securely submitted. 
+        Authorized personnel can review it without exposing
+        your confidential information publicly.
+    </p>
+</div>
+        <!-- RIGHT SIDE : AI ANALYSIS -->
+
+        <div
+            id="reportAiResult"
+            class="card"
+            style="display:none"
+        >
+
+            <div class="eyebrow">GUARDIAN AI ANALYSIS</div>
+
+            <h2>Incident Intelligence</h2>
+
+
+            <div class="metric">
+
+                <b>🏷 Suggested Category</b>
+
+                <div id="aiSuggestedCategory">
+                    Analyzing...
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric"
+                style="margin-top:12px"
+            >
+
+                <b>⚠ Suggested Severity</b>
+
+                <div id="aiSuggestedSeverity">
+                    Analyzing...
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric"
+                style="margin-top:12px"
+            >
+
+                <b>🚨 Risk Level</b>
+
+                <div id="aiRiskLevel">
+                    Analyzing...
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric"
+                style="margin-top:12px"
+            >
+
+                <b>🎯 AI Confidence</b>
+
+                <div id="aiConfidence">
+                    Analyzing...
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric"
+                style="margin-top:12px"
+            >
+
+                <b>🧠 Why Guardian AI suggested this</b>
+
+                <div id="aiReason">
+                    Analyzing...
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric"
+                style="margin-top:12px"
+            >
+
+                <b>🛡 Recommended Safety Action</b>
+
+                <div id="aiRecommendation">
+                    Analyzing...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONFIRM AND SUBMIT -->
+
+    <div
+        id="reportVerificationCard"
+        class="card"
+        style="display:none; margin-top:20px"
+    >
+
+        <div class="eyebrow">REVIEW BEFORE SUBMITTING</div>
+
+       <h2>Review & Submit Confidential Report</h2>
+
+       <p>
+    Review the AI suggestions and your report details before submitting.
+    AI provides assistance only; you remain in control of the final report.
+</p>
+
+
+        <select id="reportCategory">
+
+            <option>Low lighting</option>
+
+            <option>Harassment</option>
+
+            <option>Unsafe road</option>
+
+            <option>Suspicious activity</option>
+
+            <option>Emergency</option>
+
+        </select>
+
+
+        <select
+            id="reportSeverity"
+            style="margin-top:12px"
+        >
+
+            <option value="1">1 - Low</option>
+
+            <option value="2">2 - Mild</option>
+
+            <option value="3" selected>3 - Moderate</option>
+
+            <option value="4">4 - High</option>
+
+            <option value="5">5 - Critical</option>
+
+        </select>
+
+
+        <button
+            class="primary full"
+            style="margin-top:15px"
+            onclick="submitReport()"
+        >
+            🔒 Submit Confidential Safety Report
+        </button>
+
+    </div>
+<!-- MY CONFIDENTIAL REPORTS -->
+<div class="card wide" style="margin-top:20px;">
+
+    <div class="eyebrow">PRIVATE REPORT HISTORY</div>
+
+    <h2>🔐 My Confidential Reports</h2>
+
+    <p>
+        View the confidential safety reports you have submitted
+        and check their review status.
+    </p>
+
+    <button
+        class="ghost"
+        type="button"
+        onclick="loadMyConfidentialReports()">
+        🔄 Refresh My Reports
+    </button>
+
+    <div
+        id="myConfidentialReports"
+        style="margin-top:15px;">
+        <p>Click Refresh My Reports to view your submissions.</p>
+    </div>
+
+</div>
+</section>
+
+    <section id="page-workplace" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Workplace Safety</h1><p>Late-shift planning, safe departure and ride safety checklist.</p></div></div><div class="contentGrid three"><div class="card"><h2>🕘 Leaving Office</h2><input type="time" id="shiftTime"><button class="primary full" onclick="startWorkSession()">I'm Leaving Office Now</button></div><div class="card"><h2>🚕 Ride Safety Checklist</h2><input id="cabNumber" placeholder="Cab number"><input id="driverName" placeholder="Driver name" style="margin-top:10px"><button class="full" onclick="rideCheck()">Run Demo Checklist</button><div id="rideOutput"></div></div><div class="card"><h2>🏢 Safe Arrival</h2><p>Set a check-in after starting your journey.</p><button class="safe full" onclick="workCheckin()">Start Arrival Check-In</button><div id="workOutput"></div></div></div></section>
+
+    <section id="page-ai" class="page contentPage">
+
+    <div class="topbar">
+        <button class="mobileMenu" onclick="toggleSidebar()">☰</button>
+
+        <div>
+            <h1>Guardian AI</h1>
+            <p>Your intelligent safety and travel assistant.</p>
+        </div>
+    </div>
+
+    <div class="card guardianAiCard">
+
+        <div class="guardianAiIntro">
+
+            <div class="eyebrow">AI SAFETY ASSISTANT</div>
+
+            <h2>Ask Guardian AI</h2>
+
+            <p>
+                Ask questions about safer routes, travelling alone,
+                late-night travel, suspicious situations, emergency
+                preparedness, trusted contacts and more.
+            </p>
+
+            <button
+                class="primary guardianAiButton"
+                onclick="window.open('https://dares.zapier.app', '_blank')">
+
+                🤖 Open Guardian AI
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <section id="page-analytics" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>My Safety Journey</h1><p>Your private trip analytics.</p></div></div><div id="analyticsGrid" class="analyticsGrid"></div></section>
+
+    <section id="page-settings" class="page contentPage"><div class="topbar"><button class="mobileMenu" onclick="toggleSidebar()">☰</button><div><h1>Settings & Privacy</h1><p>Control tracking, appearance and your personal data.</p></div></div><div class="card formCard"><label class="toggle"><input type="checkbox" id="safetyToggle" checked><span>Enable safety guidance</span></label><label class="toggle"><input type="checkbox" id="darkToggle"><span>Dark mode</span></label><button class="primary full" onclick="saveSettings()">Save Settings</button><hr><button class="danger full" onclick="clearLocalSession()">Log Out</button></div></section>
+  </main>
+</div>
+
+<div id="navModal" class="modal hidden"><div class="modalCard"><button class="close" onclick="stopNavigation()">×</button><div class="eyebrow">SAFE NAVIGATION ACTIVE</div><h2 id="navDestination">Navigation</h2><div class="navInstruction" id="navInstruction">Preparing route guidance...</div><div id="navProgress"></div><div class="modalActions"><button class="safe" onclick="nextStep()">Next instruction</button> 
+    <button
+    class="ghost"
+    onclick="simulateOffRoute()"
+>
+    🧪 Simulate Off-Route
+</button>
+    <button class="danger" onclick="findSafeHaven()">Emergency Safe Haven</button></div></div></div>
+
+<div id="authModal" class="modal hidden"><div class="modalCard authCard"><button class="close" onclick="closeAuth()">×</button><div class="tabs"><button id="loginTab" class="selected" onclick="authTab('login')">Login</button><button id="registerTab" onclick="authTab('register')">Create Account</button></div><div id="authForm"></div></div></div>
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/app.js"></script>
+<!-- Guardian AI Zapier Chatbot -->
+<!-- Guardian AI Zapier Script -->
+
+
+</body>
+</html>
